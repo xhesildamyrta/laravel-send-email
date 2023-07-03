@@ -25,12 +25,15 @@ class EmailController extends Controller
                 'title' => 'Email Event',
                 'data' => json_encode($validatedData),
             ]);
-            return redirect()->back()->with('success', 'Email sent successfully.');
+            return response()->json(['message' => 'Email sent successfully.']);
         }
         catch(\Exception $e){
             Log::error('Error sending email: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'An error occurred while sending the email.');
+            // return redirect()->back()->with('error', 'An error occurred while sending the email.');
+            return response()->json(['message' => 'An error occurred while sending the email.'], 500);
+
         }
+        
     }
 
     private function validateEmailData(Request $request)
